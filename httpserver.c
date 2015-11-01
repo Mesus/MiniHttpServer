@@ -7,19 +7,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+char *blogHtml;
+int bufLen;
+
 void *HttpResponse(void *client)
 {
 	int client_fd = *(int*)client;
 	char recvBuf[1024];
 	recv(client_fd, recvBuf, sizeof(recvBuf), 0);
-	char sendText[] = "<p>hello docker!</p>";
-	char sendBuf[] = "HTTP/1.1 200 OK\r\nServer:BlogServer\r\nContent-Length:";
-	char buf[1024];
-	strcpy(buf, sendBuf);
-	sprintf(buf + sizeof(sendBuf) - 1, "%d", (int)sizeof(sendText));
-	strcat(buf, "\r\n\r\n");
-	strcat(buf, sendText);
-	send(client_fd, buf, sizeof(buf) - 1, 0);
+	send(client_fd, blogHtml, bufLen, 0);
 	shutdown(client_fd, SHUT_RDWR);
 	close(client_fd);
 	pthread_exit((void *)0);
@@ -44,6 +40,24 @@ void *ListenClient(void *server)
 	}	
 }
 
+
+void HtmlInit()
+{
+	FILE *fp;
+	fp = fopen("www/blogs.html", "r");
+	fseek(fp, 0, SEEK_END);
+	int len = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+	blogHtml = (char *)malloc((len + 100) * sizeof(char));
+	char sendBuf[] = "HTTP/1.1 200 OK\r\nServer:BlogServer\r\nContent-Length:";
+	strcpy(blogHtml, sendBuf);
+	sprintf(blogHtml + sizeof(sendBuf) - 1, "%d", len);
+	strcat(blogHtml, "\r\n\r\n");
+	fread(blogHtml + strlen(blogHtml), len, sizeof(char), fp);
+	fclose(fp);
+	bufLen = strlen(blogHtml);
+}
+
 int main(int argc,char* argv[])
 {
 	if(argc != 2) return 1;
@@ -59,12 +73,18 @@ int main(int argc,char* argv[])
 	else return 1;
 	if(!listen(server_fd, 100)) {char buf[30];printf("listen:%s:%d\n",inet_ntop(AF_INET, &server_addr.sin_addr, buf, sizeof(buf)),(unsigned int)ntohs(server_addr.sin_port));}
 	else return 1;
-	
+
+	HtmlInit();
+	printf("load finish!\n");
+
 	pthread_t ntid;
 	int ret = pthread_create(&ntid, NULL, ListenClient, &server_fd);
 	if(ret){ printf("thread create error!\nerror code = %d", ret); return -1; }
 
-	while(1) sleep((unsigned)1000);	
+	while(1) sleep((unsigned)1000);
+
+	free(blogHtml);
+
 	close(server_fd);
 	return 0;
 }
