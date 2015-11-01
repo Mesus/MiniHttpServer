@@ -5,4 +5,4 @@ RUN apt-get -y install gcc make
 COPY / /
 EXPOSE 80
 RUN make all
-ENTRYPOINT ./httpserver 80
+ENTRYPOINT ["/httpserver", "80"]
