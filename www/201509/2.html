@@ -1,0 +1,482 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<style>/*
+ * https://bitbucket.org/kevinburke/markdowncss
+ *
+ * Copyright 2011 Kevin Burke unless otherwise noted.
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ *   Some content is copyrighted by Twitter, Inc., and also released under an
+ *   Apache License; these sections are noted in the source.
+ */
+body{
+    margin: 0 auto;
+    font-family: Georgia, Palatino, serif;
+    color: #444444;
+    line-height: 1;
+    max-width: 960px;
+    padding: 30px;
+}
+h1, h2, h3, h4 {
+    color: #111111;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, p {
+    margin-bottom: 24px;
+    padding: 0;
+}
+h1 {
+    font-size: 48px;
+}
+h2 {
+    font-size: 36px;
+    /* The bottom margin is small. It's designed to be used with gray meta text
+     * below a post title. */
+    margin: 24px 0 6px;
+}
+h3 {
+    font-size: 24px;
+}
+h4 {
+    font-size: 21px;
+}
+h5 {
+    font-size: 18px;
+}
+a {
+    color: #0099ff;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+a:hover {
+    text-decoration: none;
+    color: #ff6600;
+}
+a:visited {
+    color: purple;
+}
+ul, ol {
+    padding: 0;
+    margin: 0;
+}
+li {
+    line-height: 24px;
+}
+li ul, li ul {
+    margin-left: 24px;
+}
+p, ul, ol {
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 540px;
+}
+pre {
+    padding: 0px 24px;
+    max-width: 800px;
+    white-space: pre-wrap;
+}
+code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    line-height: 1.5;
+/*    font-size: 13px;*/
+}
+aside {
+    display: block;
+    float: right;
+    width: 390px;
+}
+blockquote {
+    border-left:.5em solid #eee;
+    padding: 0 2em;
+    margin-left:0;
+    max-width: 476px;
+}
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {  
+    color: #666;
+    max-width: 460px;
+}
+hr {
+    width: 540px;
+    text-align: left;
+    margin: 0 auto 0 0;
+    color: #999;
+}
+
+/* Code below this line is copyright Twitter Inc. */
+
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle;
+}
+button, input {
+  line-height: normal;
+  *overflow: visible;
+}
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+}
+/* override default chrome & firefox settings */
+input:not([type="image"]), textarea {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+label,
+input,
+select,
+textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: normal;
+  margin-bottom: 18px;
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+input[type=text],
+input[type=password],
+textarea,
+select {
+  display: inline-block;
+  width: 210px;
+  padding: 4px;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  height: 18px;
+  color: #808080;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+select, input[type=file] {
+  height: 27px;
+  line-height: 27px;
+}
+textarea {
+  height: auto;
+}
+
+/* grey out placeholders */
+:-moz-placeholder {
+  color: #bfbfbf;
+}
+::-webkit-input-placeholder {
+  color: #bfbfbf;
+}
+
+input[type=text],
+input[type=password],
+select,
+textarea {
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
+  outline: none;
+  border-color: rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+/* buttons */
+button {
+  display: inline-block;
+  padding: 4px 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #0064cd;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
+  background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
+  background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -o-linear-gradient(top, #049cdb, #0064cd);
+  background-image: linear-gradient(top, #049cdb, #0064cd);
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border: 1px solid #004b9a;
+  border-bottom-color: #003f81;
+  -webkit-transition: 0.1s linear all;
+  -moz-transition: 0.1s linear all;
+  transition: 0.1s linear all;
+  border-color: #0064cd #0064cd #003f81;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+button:hover {
+  color: #fff;
+  background-position: 0 -15px;
+  text-decoration: none;
+}
+button:active {
+  -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+</style>
+</head>
+<body>
+<h2 id="C-BlogServer......-......Django...wsgi...............C.........">C-BlogServer博客-基于Django的wsgi接口多线程C服务器</h2>
+
+<p>基于第一第二篇博客的内容来综合写的这篇博客</p>
+
+<p>第二篇中的python调用将加入到第一篇的多线程c服务器中</p>
+
+<p>将第二篇中的main函数分割</p>
+
+<pre><code class="c">PyObject *pModule; 
+PyObject *pFunc; 
+PyObject *module; 
+PyObject *response;
+
+int DjangoInit()//c调用python的django，初始化 
+{ 
+    Py_Initialize(); 
+    if (!Py_IsInitialized()) return -1; 
+    PyRun_SimpleString("import sys"); 
+    PyRun_SimpleString("sys.path.append('./')"); 
+    pModule = PyImport_ImportModule("mysite.wsgi"); 
+    if(!pModule){ 
+            printf("import failed!\n"); 
+            return 1; 
+        } 
+    pFunc = PyObject_GetAttrString(pModule, "application"); 
+    if(!pFunc){ 
+               printf("get function failed!\n"); 
+               return 1; 
+        } 
+    module = Py_InitModule("start_response", start_response_methods); 
+    response = PyObject_GetAttrString(module, "start_response"); 
+    return 0; 
+}
+
+char* DjangoResponse(char* method,char* url,char* query)//初始化后可以返回提交网页请求 
+{ 
+    PyObject *environ = PyDict_New(); 
+    PyDict_SetItemString(environ, "REQUEST_METHOD", PyString_FromString(method)); 
+    PyDict_SetItemString(environ, "SERVER_NAME", PyString_FromString("BlogServer")); 
+    PyDict_SetItemString(environ, "SERVER_PORT", PyString_FromString("80")); 
+    PyDict_SetItemString(environ, "QUERY_STRING", PyString_FromString(query)); 
+    PyDict_SetItemString(environ, "PATH_INFO", PyString_FromString(url)); 
+    PyDict_SetItemString(environ, "wsgi.input", PyString_FromString("")); 
+    PyObject *pArgs = PyTuple_New(2); 
+    PyTuple_SetItem(pArgs, 0, environ); 
+    PyTuple_SetItem(pArgs, 1, response); 
+    char *http=PyString_AsString(PyObject_Str(PyObject_CallObject(pFunc, pArgs))); 
+    return http; 
+}
+
+
+void DjangoDestory()//最后销毁 
+{ 
+    Py_DECREF(response); 
+    Py_DECREF(pModule); 
+    Py_DECREF(pFunc); 
+    Py_Finalize(); 
+    Py_DECREF(module); 
+}
+</code></pre>
+
+<p>其中还有一个很重要的回调函数，里面会设置http相应状态码，这个由于是多线程的不能使用静态全局变量，即便是加锁互斥也会对效率造成影响，实际上这个变量完全没有必要在线程间共享，这时候我们要用到线程私有变量，共享变量名</p>
+
+<pre><code class="c">pthread_key_t key;//共享变量名
+
+void dest(void *buf)   
+{   
+    //printf("destructor excuted in thread %d,param=%s\n",(int)pthread_self(),(char*)buf);   
+}
+
+static PyObject *start_response(PyObject *self, PyObject *args) 
+{ 
+    pthread_setspecific(key,(void *)PyString_AsString(PyObject_Str(PyTuple_GetItem(args, 0))));//写入线程私有key变量 
+    //printf("%s\n",PyString_AsString(PyObject_Str(PyTuple_GetItem(args, 0)))); 
+    //printf("%s\n",PyString_AsString(PyObject_Str(PyTuple_GetItem(args, 1)))); 
+    //printf("%s\n",PyString_AsString(PyObject_Str(PyTuple_GetItem(args, 2)))); 
+    return Py_None; 
+}
+
+
+static struct PyMethodDef start_response_methods[] = { 
+    {"start_response", start_response, METH_VARARGS}, 
+    {NULL, NULL}};
+</code></pre>
+
+<p>主函数部分增加django框架初始化以及销毁操作，同时增加创建key操作</p>
+
+<pre><code class="c">int main(int argc,char* argv[]) 
+{ 
+    if(argc != 2) return 1; 
+    int server_fd = socket(AF_INET, SOCK_STREAM, IPPROTO_IP); 
+    printf("socket_fd:%d\n", server_fd); 
+    struct sockaddr_in server_addr; 
+    server_addr.sin_addr.s_addr = htonl(INADDR_ANY); 
+    server_addr.sin_family = AF_INET; 
+    server_addr.sin_port = htons(atoi(argv[1])); 
+    int val = 1; 
+    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &amp;val, sizeof(int)); 
+    setsockopt(server_fd, SOL_SOCKET, SO_REUSEPORT, &amp;val, sizeof(int)); 
+    if(!bind(server_fd, (struct sockaddr*)&amp;server_addr, sizeof(struct sockaddr))) {char buf[30];printf("bind:%s:%d\n",inet_ntop(AF_INET, &amp;server_addr.sin_addr, buf, sizeof(buf)),(unsigned int)ntohs(server_addr.sin_port));} 
+    else return 1; 
+    if(!listen(server_fd, 100)) {char buf[30];printf("listen:%s:%d\n",inet_ntop(AF_INET, &amp;server_addr.sin_addr, buf, sizeof(buf)),(unsigned int)ntohs(server_addr.sin_port));} 
+    else return 1; 
+
+    if(DjangoInit()) return 1;//python初始化 
+    pthread_key_create(&amp;key,dest);//key创建 
+    pthread_t ntid; 
+    pthread_create(&amp;ntid, NULL, ListenClient, &amp;server_fd); 
+
+    int loop; 
+    scanf("%d",&amp;loop);
+
+    close(server_fd); 
+    pthread_key_delete(key);//销毁key 
+    DjangoDestory();//python环境回收 
+    return 0; 
+}
+</code></pre>
+
+<p>最后就是socket读写交互与django的相应拼接了</p>
+
+<pre><code class="c">void *HttpResponse(void *client) 
+{ 
+    int client_fd = *(int*)client; 
+    char recvBuf[1024]; 
+    recv(client_fd, recvBuf, sizeof(recvBuf), 0); 
+    char *p = strtok(recvBuf, "\r\n"); 
+    int err = 1; 
+    if(p != NULL){ 
+        char *method = strtok(p, " "); 
+        if(method != NULL){ 
+            p = strtok(NULL," "); 
+            char *url = strtok(p,"?"); 
+            if(url != NULL){ 
+                char *query = strtok(NULL," "); 
+                if(query == NULL) query = ""; 
+                char s1[100]; 
+                char *s2 = DjangoResponse(method, url, query); 
+                if(s2 != NULL){ 
+                    char *s = strstr(s2,"\r\n\r\n"); 
+                    if(s != NULL){ 
+                        sprintf(s1, "HTTP/1.1 %s\r\nServer:BlogServer\r\nContent-Length:%d\r\n", (char*)pthread_getspecific(key), (int)strlen(s) - 3); 
+                        //printf("%s\n%s\n%s\n%s\n",method, url, query, s2); 
+                        int size = strlen(s1)+strlen(s2)+1; 
+                          char *sendBuf = malloc(size); 
+                           strcpy(sendBuf, s1); 
+                            strcat(sendBuf, s2); 
+                        sendBuf[size-1] = '\0'; 
+                        send(client_fd, sendBuf, size, 0); 
+                        free(sendBuf); 
+                    } 
+                    else err = 0; 
+                } 
+                else err = 0; 
+            } 
+            else err = 0; 
+        } 
+        else err = 0; 
+    } 
+    else err = 0; 
+    if(!err){ 
+        char sendBuf[] = "HTTP/1.1 404 NOT FOUND\r\nServer:BlogServer\r\nContent-Length:0\r\n\r\n"; 
+        send(client_fd, sendBuf, sizeof(sendBuf), 0); 
+    } 
+    shutdown(client_fd, SHUT_RDWR); 
+    close(client_fd); 
+    pthread_exit((void *)0); 
+}
+</code></pre>
+
+<p>对从客户端读取到的第一条重要的信息进行分割</p>
+
+<p>GET /a?b HTTP1.1</p>
+
+<p>得到</p>
+
+<p>method为GET</p>
+
+<p>path为/a</p>
+
+<p>query为b</p>
+
+<p>这样分割得到的消息传到DjangoResponse即可得到正文</p>
+
+<p>正文去掉头再strlen()获得长度作为Content-Length</p>
+
+<p>由于中间涉及太多指针操作，都要判断是否为空避免异常，c也没有很好的异常机制只能手动来处理一下</p>
+
+<p>最后就上个图吧</p>
+
+<p><img src="/static/201509_2_1.jpg" alt="show" /></p>
+
+<p>其实还是有一些问题没有解决，最主要的是静态文件没法返回，实际上直接用原来的wsgi接口来进行静态文件请求也是失败的，可能wsgi接口处理上仍然不够完善，以及post方法并没有进行测试，这也许要留到下一章进行更深度的分析了</p>
+</body>
+</html>

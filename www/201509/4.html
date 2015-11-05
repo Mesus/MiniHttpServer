@@ -1,0 +1,404 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<style>/*
+ * https://bitbucket.org/kevinburke/markdowncss
+ *
+ * Copyright 2011 Kevin Burke unless otherwise noted.
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ *   Some content is copyrighted by Twitter, Inc., and also released under an
+ *   Apache License; these sections are noted in the source.
+ */
+body{
+    margin: 0 auto;
+    font-family: Georgia, Palatino, serif;
+    color: #444444;
+    line-height: 1;
+    max-width: 960px;
+    padding: 30px;
+}
+h1, h2, h3, h4 {
+    color: #111111;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, p {
+    margin-bottom: 24px;
+    padding: 0;
+}
+h1 {
+    font-size: 48px;
+}
+h2 {
+    font-size: 36px;
+    /* The bottom margin is small. It's designed to be used with gray meta text
+     * below a post title. */
+    margin: 24px 0 6px;
+}
+h3 {
+    font-size: 24px;
+}
+h4 {
+    font-size: 21px;
+}
+h5 {
+    font-size: 18px;
+}
+a {
+    color: #0099ff;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+a:hover {
+    text-decoration: none;
+    color: #ff6600;
+}
+a:visited {
+    color: purple;
+}
+ul, ol {
+    padding: 0;
+    margin: 0;
+}
+li {
+    line-height: 24px;
+}
+li ul, li ul {
+    margin-left: 24px;
+}
+p, ul, ol {
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 540px;
+}
+pre {
+    padding: 0px 24px;
+    max-width: 800px;
+    white-space: pre-wrap;
+}
+code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    line-height: 1.5;
+/*    font-size: 13px;*/
+}
+aside {
+    display: block;
+    float: right;
+    width: 390px;
+}
+blockquote {
+    border-left:.5em solid #eee;
+    padding: 0 2em;
+    margin-left:0;
+    max-width: 476px;
+}
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {  
+    color: #666;
+    max-width: 460px;
+}
+hr {
+    width: 540px;
+    text-align: left;
+    margin: 0 auto 0 0;
+    color: #999;
+}
+
+/* Code below this line is copyright Twitter Inc. */
+
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle;
+}
+button, input {
+  line-height: normal;
+  *overflow: visible;
+}
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+}
+/* override default chrome & firefox settings */
+input:not([type="image"]), textarea {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+label,
+input,
+select,
+textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: normal;
+  margin-bottom: 18px;
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+input[type=text],
+input[type=password],
+textarea,
+select {
+  display: inline-block;
+  width: 210px;
+  padding: 4px;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  height: 18px;
+  color: #808080;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+select, input[type=file] {
+  height: 27px;
+  line-height: 27px;
+}
+textarea {
+  height: auto;
+}
+
+/* grey out placeholders */
+:-moz-placeholder {
+  color: #bfbfbf;
+}
+::-webkit-input-placeholder {
+  color: #bfbfbf;
+}
+
+input[type=text],
+input[type=password],
+select,
+textarea {
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
+  outline: none;
+  border-color: rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+/* buttons */
+button {
+  display: inline-block;
+  padding: 4px 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #0064cd;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
+  background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
+  background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -o-linear-gradient(top, #049cdb, #0064cd);
+  background-image: linear-gradient(top, #049cdb, #0064cd);
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border: 1px solid #004b9a;
+  border-bottom-color: #003f81;
+  -webkit-transition: 0.1s linear all;
+  -moz-transition: 0.1s linear all;
+  transition: 0.1s linear all;
+  border-color: #0064cd #0064cd #003f81;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+button:hover {
+  color: #fff;
+  background-position: 0 -15px;
+  text-decoration: none;
+}
+button:active {
+  -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+</style>
+</head>
+<body>
+<h2 id="C-BlogServer......-.................................">C-BlogServer博客-数据库以及验证码的解决</h2>
+
+<p>在第三章合并c并发的server服务器以及调用django的wsgi接口两部分内容后，只需要做django内部的编写就可以写出网站</p>
+
+<p>这里mark一下使用pil的方法</p>
+
+<ul>
+<li>apt-get install libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev</li>
+<li>ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib</li>
+<li>ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib</li>
+<li>ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib</li>
+<li>ln -s /usr/include/freetype2 /usr/include/freetype</li>
+<li>pip install PIL &ndash;allow-external PIL &ndash;allow-unverified PIL</li>
+</ul>
+
+
+<p>可是事实上第三章只测试了静态html网页的可用性</p>
+
+<p>在实际的blog网站中，遇到了一些问题</p>
+
+<p>问题以及解决方案</p>
+
+<p>1，数据库读写问题</p>
+
+<p>使用我写的server服务器，第一个问题就出现在这，只要涉及到数据库的读写都会出现这个问题，根据提示我们不难发现是线程的问题，搜索一下没有什么合理的解决方案，尝试根据错误提示来查找问题的所在</p>
+
+<p>DatabaseWrapper objects created in a thread can only be used in that same thread.</p>
+
+<p><img src="/static/201509_4_1.jpg" alt="show" /></p>
+
+<p>既然写着thread id，我们尝试在源程序中将所有创建的线程都printf出他的pid</p>
+
+<p><img src="/static/201509_4_2.jpg" alt="show" /></p>
+
+<p>不难发现，主线程和响应线程导致这个问题，怎么办呢，肯定将主线程中一些涉及到python数据库的代码转移到响应线程中</p>
+
+<p>回到main函数，我们调用了两个python相关的函数，都是自己定义的方法，包括djangoinit和djangodestory（排除）</p>
+
+<p>其中init方法里头</p>
+
+<p><img src="/static/201509_4_3.jpg" alt="show" /></p>
+
+<p>里面只有少数的方法，包括py环境初始化，设置工作目录，导入wsgi，再获取application方法</p>
+
+<p>其实只有包导入和获取部分放到响应线程中完成即可</p>
+
+<p><img src="/static/201509_4_4.jpg" alt="show" /></p>
+
+<p>编译测试一下</p>
+
+<p><img src="/static/201509_4_5.jpg" alt="show" /></p>
+
+<p>可以正常打开网站了</p>
+
+<p>这里头我们立马发现第二个问题</p>
+
+<p>2，验证码无法显示</p>
+
+<p>无法显示原因是什么的，单从浏览器很难看出来</p>
+
+<p>利用chrome我们打开验证码图片链接</p>
+
+<p><img src="/static/201509_4_6.jpg" alt="show" /></p>
+
+<p>发现了错误原因</p>
+
+<p>使用了重复的标头，这个怎么解决呢？</p>
+
+<p>我们用fiddler来看传输的文本内容</p>
+
+<p><img src="/static/201509_4_7.jpg" alt="show" /></p>
+
+<p>不难发现在响应头部分</p>
+
+<p>Content-length有两个，也就是说静态文件在django上会添加上响应头</p>
+
+<p>然后实际上就算去掉重复的头，c根据wsgi接口得到的数据也只有9byte</p>
+
+<p>用回python对接口调用</p>
+
+<pre><code class="python">from mysite import wsgi
+
+class HttpHandler: 
+    status = None 
+    body = None 
+    def start_response(self,status, response_headers, exc_info=None): 
+        self.status = str(status) 
+    def HttpServer(self,method,path,req): 
+        environ = {'REQUEST_METHOD':method,'SERVER_NAME':'BlogServer','QUERY_STRING':req,'SERVER_PORT':'80','PATH_INFO':path,'wsgi.input':''} 
+        self.body = str(wsgi.application(environ,self.start_response)) 
+    def Run(self): 
+        self.HttpServer('GET','/captcha/image/fa75e9edf75866e81e0146855d17345c92bcfe22/','') 
+        return self.status+'\r\n'+self.body 
+print HttpHandler().Run()
+</code></pre>
+
+<p>显示的是完整图片的byte</p>
+
+<p>问题在于c调用python时返回值，为什么是9byte</p>
+
+<p><img src="/static/201509_4_8.jpg" alt="show" /></p>
+
+<p>最后一位刚好是00，难道在c中把这一位当成\0终结？</p>
+
+<p><img src="/static/201509_4_9.jpg" alt="show" /></p>
+
+<p>强行复制内存，无效</p>
+
+<p>依然打不开图片</p>
+
+<p>虽然打不开图片，但修改一下排除掉重复标头可以正常访问一下</p>
+
+<p>3，POST的header以及cookie等请求头并没有作为参数传参</p>
+
+<p>这些问题在后续博客中继续研究</p>
+</body>
+</html>
