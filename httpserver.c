@@ -9,9 +9,9 @@
 #include <dirent.h>
 #include <zlib.h>
 
-#define ROOT_DIR "./www"
-
-short int gzipFlag = 1;
+char ROOT_DIR[200] 	= "./www";
+short int gzipFlag 	= 1;
+int port		= 80;
 
 int gzcompress(Bytef *data, uLong ndata, Bytef *zdata, uLong *nzdata)
 {
@@ -69,7 +69,7 @@ struct ResponseData* GetResponseData(char *path)
 void *HttpResponse(void *client)
 {
 	int client_fd = *(int*)client;
-	char recvBuf[10000];
+	char recvBuf[5000];
 	recv(client_fd, recvBuf, sizeof(recvBuf), 0);
 	char *token = strtok(recvBuf," ");
 	if(token != NULL){
@@ -196,18 +196,20 @@ void ShowAllData()
 
 int main(int argc,char* argv[])
 {
-	if(argc == 2);
-	else if(argc == 3) { 
-		if(strcmp(argv[2], "nogzip") == 0) gzipFlag = 0;
-		else if(strcmp(argv[2], "gzip") == 0) gzipFlag = 1;
+	if(argc >= 2) port = atoi(argv[1]);
+	if(argc >= 3) memcpy(ROOT_DIR, argv[2], strlen(argv[2]));
+	if(argc >= 4) {
+		if(strcmp(argv[3], "nogzip") == 0) gzipFlag = 0;
+		else if(strcmp(argv[3], "gzip") == 0) gzipFlag = 1;
 	}
-	else return 1;
-
+	if(argc >= 5) {
+		printf("invalid argument!"); return 1;
+	}
 	int server_fd = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
 	struct sockaddr_in server_addr;
 	server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(atoi(argv[1]));
+	server_addr.sin_port = htons(port);
 	int val = 1;
 	setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(int));
 	setsockopt(server_fd, SOL_SOCKET, SO_REUSEPORT, &val, sizeof(int));
@@ -216,7 +218,7 @@ int main(int argc,char* argv[])
 	if(!listen(server_fd, 100)) {char buf[30];printf("listen:%s:%d\n",inet_ntop(AF_INET, &server_addr.sin_addr, buf, sizeof(buf)),(unsigned int)ntohs(server_addr.sin_port));}
 	else return 1;
 
-	printf("load:\n");
+	printf("load:\nroot path:%s\n", ROOT_DIR);
 	firstData = (struct ResponseData*)malloc(sizeof(struct ResponseData));
 	struct ResponseData *pData = firstData;
 	HtmlInit(ROOT_DIR, pData);

@@ -5,4 +5,4 @@ RUN apt-get -y install gcc make zlib1g.dev
 COPY / /
 EXPOSE 80
 RUN make all
-ENTRYPOINT ["/httpserver", "80"]
+CMD ["/httpserver", "80", "./www", "gzip"]
