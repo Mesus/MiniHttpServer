@@ -129,9 +129,10 @@ void HtmlRead(char *path, struct ResponseData* data)
 	if(gzipFlag) fdata = gzipHtml(fdata, &len);
 	data->buf = (char *)malloc((len + 100) * sizeof(char));
 	char* blogHtml = data->buf;
-	char sendBuf[] = "HTTP/1.1 200 OK\r\nServer:BlogServer\r\nContent-Encoding:gzip\r\nContent-Length:";
+	char sendBuf[] = "HTTP/1.1 200 OK\r\nServer:BlogServer\r\nContent-Length:";
 	strcpy(blogHtml, sendBuf);
 	sprintf(blogHtml + sizeof(sendBuf) - 1, "%ld", len);
+	if(gzipFlag) strcat(blogHtml, "\r\nContent-Encoding:gzip");
 	strcat(blogHtml, "\r\n\r\n");
 	int marklen = strlen(blogHtml);
 	memcpy(blogHtml + marklen, fdata, len * sizeof(char));
