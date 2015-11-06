@@ -2,7 +2,7 @@ CC = gcc
 all : clean httpserver
 .PHONY:all
 httpserver : httpserver.c
-	$(CC) -o httpserver httpserver.c -lpthread
+	$(CC) -o httpserver httpserver.c -lpthread -lz
 .PHONY:clean
 clean:
 	@if [ -e "httpserver" ];then rm httpserver;fi

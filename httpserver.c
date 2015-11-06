@@ -7,8 +7,42 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <zlib.h>
 
 #define ROOT_DIR "./www"
+
+short int gzipFlag = 1;
+
+int gzcompress(Bytef *data, uLong ndata, Bytef *zdata, uLong *nzdata)
+{
+	z_stream c_stream;
+	int err = 0;
+	if(data && ndata > 0)
+	{
+		c_stream.zalloc = (alloc_func)0;
+		c_stream.zfree = (free_func)0;
+        	c_stream.opaque = (voidpf)0;
+        	if(deflateInit2(&c_stream, Z_DEFAULT_COMPRESSION, Z_DEFLATED, MAX_WBITS + 16, 8, Z_DEFAULT_STRATEGY) != Z_OK) return -1;
+        	c_stream.next_in = data;
+        	c_stream.avail_in = ndata;
+        	c_stream.next_out = zdata;
+        	c_stream.avail_out = *nzdata;
+        	while (c_stream.avail_in != 0 && c_stream.total_out < *nzdata) 
+        	{
+        		if(deflate(&c_stream, Z_NO_FLUSH) != Z_OK) return -1;
+        	}
+        	if(c_stream.avail_in != 0) return c_stream.avail_in;
+        	while (1) {
+            		if((err = deflate(&c_stream, Z_FINISH)) == Z_STREAM_END) break;
+            		if(err != Z_OK) return -1;
+        	}
+        	if(deflateEnd(&c_stream) != Z_OK) return -1;
+        	*nzdata = c_stream.total_out;
+        	return 0;
+    	}
+    	return -1;
+}
+
 
 struct ResponseData
 {
@@ -72,24 +106,37 @@ void *ListenClient(void *server)
 }
 
 
+char* gzipHtml(char* data, unsigned long *len)
+{
+	unsigned long zlen = *len;
+	char *gzipHtmlData = (char *)malloc(zlen * sizeof(char));
+	gzcompress(data, *len, gzipHtmlData, &zlen);
+	free(data);
+	*len = zlen;
+	return gzipHtmlData;
+}
+
 void HtmlRead(char *path, struct ResponseData* data)
 {
 	FILE *fp;
 	fp = fopen(path, "r");
 	fseek(fp, 0, SEEK_END);
-	int len = ftell(fp);
+	unsigned long len = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
+	char *fdata = (char *)malloc(len * sizeof(char));
+	fread(fdata, len, sizeof(char), fp);
+	fclose(fp);
+	if(gzipFlag) fdata = gzipHtml(fdata, &len);
 	data->buf = (char *)malloc((len + 100) * sizeof(char));
 	char* blogHtml = data->buf;
-	char sendBuf[] = "HTTP/1.1 200 OK\r\nServer:BlogServer\r\nContent-Length:";
+	char sendBuf[] = "HTTP/1.1 200 OK\r\nServer:BlogServer\r\nContent-Encoding:gzip\r\nContent-Length:";
 	strcpy(blogHtml, sendBuf);
-	sprintf(blogHtml + sizeof(sendBuf) - 1, "%d", len);
+	sprintf(blogHtml + sizeof(sendBuf) - 1, "%ld", len);
 	strcat(blogHtml, "\r\n\r\n");
 	int marklen = strlen(blogHtml);
-	fread(blogHtml + marklen, len, sizeof(char), fp);
-	fclose(fp);
+	memcpy(blogHtml + marklen, fdata, len * sizeof(char));
+	free(fdata);
 	data->len = marklen + len;
-	//*(blogHtml + data->len) = '\0';
 	data->path = (char *)malloc(strlen(path) * sizeof(char));
 	memcpy(data->path, path + strlen(ROOT_DIR), strlen(path) - strlen(ROOT_DIR) + 1);
 	printf("url:\t%s\n", data->path);
@@ -148,7 +195,13 @@ void ShowAllData()
 
 int main(int argc,char* argv[])
 {
-	if(argc != 2) return 1;
+	if(argc == 2);
+	else if(argc == 3) { 
+		if(strcmp(argv[2], "nogzip") == 0) gzipFlag = 0;
+		else if(strcmp(argv[2], "gzip") == 0) gzipFlag = 1;
+	}
+	else return 1;
+
 	int server_fd = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
 	struct sockaddr_in server_addr;
 	server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
